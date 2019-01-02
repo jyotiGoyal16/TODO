@@ -78,3 +78,7 @@ ul{
 .completed::after{
     content:'  ✔';
 }
+
+.hidden{
+    display: none;
+}
