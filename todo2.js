@@ -21,7 +21,7 @@ text1.addEventListener('keypress', function(event){
 
 
 //When page loads or refresh, get values from localstorage and display
-window.addEventListener("load", getItemFromStorage, false);
+window.addEventListener("load", getItemFromStorage);
 
 function getItemFromStorage(){
         var a = localStorage.key(1);
@@ -31,14 +31,6 @@ function getItemFromStorage(){
         for(i in b){
             limaker2(b[i],d[i]);
             pendingToComplete();
-        }
-        var litags = ul.getElementsByTagName("li");
-        var items = document.getElementsByClassName("itemcheck");
-        for(j=0;j<litags.length;j++){
-            if(litags[j].className == "completed"){
-                litags[j].appendChild(document.createTextNode("\u2713"));
-                items[j].style.display="none";  
-            }
         }
     }
 
@@ -104,8 +96,6 @@ function pendingToComplete(){
             
             if(this.parentNode.className=="pending"){
                 this.parentNode.setAttribute("class", "completed");
-                this.parentNode.appendChild(document.createTextNode("\u2713"));
-                this.style.display="none";
                 var store = localStorage.key(0);
                 r = JSON.parse(localStorage.getItem(store));
                 for(j in r){

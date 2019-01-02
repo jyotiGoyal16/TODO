@@ -70,3 +70,11 @@ ul{
     font-size: 1.5vw;
     padding-left:5%;
 }
+
+.completed .itemcheck{
+    display:none;
+}
+
+.completed::after{
+    content:'  ✔';
+}
