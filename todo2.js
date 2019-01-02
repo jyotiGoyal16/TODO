@@ -1,6 +1,6 @@
 var ul = document.getElementById('todolist'); //ul
 var text1 = document.getElementById('todotext'); //input text box
-var classArray = [];
+//var classArray = [];
 
 //Add input value in todo list
 text1.addEventListener('keypress', function(event){
