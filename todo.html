@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>My TODO List</title>
+        <link rel="stylesheet" href="todo.css">
+    </head>
+    <body>
+        <div class="tododiv">
+            <ul class="tabs">
+                <li class="state active" id="alltodo" onclick="displayall()">Todo</li>
+                <li class="state" id="pendingtodo" onclick="displaypending()">Pending</li>
+                <li class="state" id="completedtodo" onclick="displaycompleted()">Completed</li>
+            </ul>
+                <input type="text" placeholder="enter your todo" id="todotext">
+
+                <ul id="todolist">
+                </ul>
+                
+        </div>
+        <script src="todo2.js"></script>
+    </body>
+</html>
