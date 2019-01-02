@@ -1,7 +1,10 @@
-var ul = document.getElementById('todolist'); //ul
-var text1 = document.getElementById('todotext'); //input text box
-//var classArray = [];
-
+let ul = document.getElementById('todolist'); //ul
+let text1 = document.getElementById('todotext'); //input text box
+let completed = document.getElementsByClassName("completed");
+let pending = document.getElementsByClassName("pending");
+let tabs = document.getElementsByClassName("state");
+let items = document.getElementsByClassName("itemcheck");
+let itemsArray = [];
 //Add input value in todo list
 text1.addEventListener('keypress', function(event){
     if(event.keyCode == 13){
@@ -13,7 +16,7 @@ text1.addEventListener('keypress', function(event){
         //create li elements in ul
             limaker(text1.value);
 
-    document.getElementById('todotext').value= ''; //clear input field
+    text1.value= ''; //clear input field
     }
 
     pendingToComplete();
@@ -36,10 +39,9 @@ function getItemFromStorage(){
 
 //changing tabs
 
-    var tabs = document.getElementsByClassName("state");
-    for (var i = 0; i < tabs.length; i++) {
+    for (let i = 0; i < tabs.length; i++) {
         tabs[i].addEventListener("click", function() {
-        var current = document.getElementsByClassName("active");
+        let current = document.getElementsByClassName("active");
         current[0].className = current[0].className.replace(" active", "");
         this.className += " active";
     });
@@ -48,8 +50,6 @@ function getItemFromStorage(){
 //display all todos
 function displayall(){
     document.getElementById("todotext").style.display="block";
-    var completed = document.getElementsByClassName("completed");
-    var pending = document.getElementsByClassName("pending");
     for(i=0;i<completed.length;i++){
         completed[i].style.display="block";
     }
@@ -62,8 +62,6 @@ function displayall(){
 //display pending todos
 function displaypending(){
     document.getElementById("todotext").style.display="none";
-    var completed = document.getElementsByClassName("completed");
-    var pending = document.getElementsByClassName("pending");
     for(i=0;i<completed.length;i++){
         completed[i].style.display="none";
     }
@@ -77,8 +75,6 @@ function displaypending(){
 //display completed todos
 function displaycompleted(){
     document.getElementById("todotext").style.display="none";
-    var pending = document.getElementsByClassName("pending");
-    var completed = document.getElementsByClassName("completed");
     for(i=0;i<pending.length;i++){
         pending[i].style.display="none";
     }
@@ -90,13 +86,12 @@ function displaycompleted(){
 
 //function to chnage pending task to completed
 function pendingToComplete(){
-    var items = document.getElementsByClassName("itemcheck");
-    for (var i = 0; i < items.length; i++) {
+    for (let i = 0; i < items.length; i++) {
         items[i].addEventListener("change", function() {
             
             if(this.parentNode.className=="pending"){
                 this.parentNode.setAttribute("class", "completed");
-                var store = localStorage.key(0);
+                let store = localStorage.key(0);
                 r = JSON.parse(localStorage.getItem(store));
                 for(j in r){
                     if(j==i-1){
@@ -112,33 +107,33 @@ function pendingToComplete(){
 //storing values in localstorage
 function addItemToStorage(){
     if(localStorage.getItem('items') == null){
-        var itemsArray = [];
+        itemsArray = [];
         itemsArray.push(text1.value);
         localStorage.setItem('items', JSON.stringify(itemsArray));
 
     }else{
-         var itemsArray = JSON.parse(localStorage.getItem('items'));
+         itemsArray = JSON.parse(localStorage.getItem('items'));
          itemsArray.push(text1.value);
          localStorage.setItem('items', JSON.stringify(itemsArray));
     }
 }
-//var classArray = [];
+
 //function for creating li elements
 function limaker(itemvalue){
-    var li = document.createElement('li');//li
+    let li = document.createElement('li');//li
     
-    var checkbox = document.createElement('input');
+    let checkbox = document.createElement('input');
         checkbox.type = "checkbox";
         checkbox.setAttribute("class", "itemcheck");
 
     
     li.appendChild(checkbox);
 
-    var label= document.createElement('label');
+    let label= document.createElement('label');
     label.appendChild(document.createTextNode(itemvalue));
     li.setAttribute("class", "pending");
     if(localStorage.getItem('classes') == null){
-        var classArray = [];
+        classArray = [];
         classArray.push(li.className);
         localStorage.setItem('classes', JSON.stringify(classArray));
     }else{
@@ -152,16 +147,16 @@ function limaker(itemvalue){
 }
 
 function limaker2(itemvalue,classvalue){
-    var li = document.createElement('li');//li
+    let li = document.createElement('li');//li
     
-    var checkbox = document.createElement('input');
+    let checkbox = document.createElement('input');
         checkbox.type = "checkbox";
         checkbox.setAttribute("class", "itemcheck");
 
     
     li.appendChild(checkbox);
 
-    var label= document.createElement('label');
+    let label= document.createElement('label');
     label.appendChild(document.createTextNode(itemvalue));
     li.setAttribute("class", classvalue);
     li.appendChild(label);
