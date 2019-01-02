@@ -5,34 +5,36 @@ let pending = document.getElementsByClassName("pending");
 let tabs = document.getElementsByClassName("state");
 let items = document.getElementsByClassName("itemcheck");
 let itemsArray = [];
+
 //Add input value in todo list
 text1.addEventListener('keypress', function(event){
     if(event.keyCode == 13){
         event.preventDefault();
-       
-        //add item to local storage
-            addItemToStorage();
-        
+
         //create li elements in ul
-            limaker(text1.value);
+            let myvalue = limaker(text1.value);
+
+         //add item to local storage
+            addItemToStorage(myvalue);
 
     text1.value= ''; //clear input field
     }
-
     pendingToComplete();
 });
 
 
 //When page loads or refresh, get values from localstorage and display
-window.addEventListener("load", getItemFromStorage);
+window.addEventListener("load", function(){
+    getItemFromStorage();
+    //addItemToStorage();
+});
 
 function getItemFromStorage(){
         var a = localStorage.key(1);
         var b = JSON.parse(localStorage.getItem(a));
-        var c = localStorage.key(0);
-        var d = JSON.parse(localStorage.getItem(c));
         for(i in b){
-            limaker2(b[i],d[i]);
+            limaker(b[i].data,b[i].state);
+            addItemToStorage(b[i].data,b[i].state);
             pendingToComplete();
         }
     }
@@ -105,15 +107,15 @@ function pendingToComplete(){
 }
 
 //storing values in localstorage
-function addItemToStorage(){
+function addItemToStorage(valueparam, states = "false"){
     if(localStorage.getItem('items') == null){
         itemsArray = [];
-        itemsArray.push(text1.value);
+        itemsArray.push({'data':valueparam, 'state':states});
         localStorage.setItem('items', JSON.stringify(itemsArray));
 
     }else{
-         itemsArray = JSON.parse(localStorage.getItem('items'));
-         itemsArray.push(text1.value);
+         //itemsArray = JSON.parse(localStorage.getItem('items'));
+         itemsArray.push({'data':valueparam, 'state':states});
          localStorage.setItem('items', JSON.stringify(itemsArray));
     }
 }
@@ -129,8 +131,8 @@ function limaker(itemvalue){
     
     li.appendChild(checkbox);
 
-    let label= document.createElement('label');
-    label.appendChild(document.createTextNode(itemvalue));
+    //let label= document.createElement('label');
+    li.appendChild(document.createTextNode(itemvalue));
     li.setAttribute("class", "pending");
     if(localStorage.getItem('classes') == null){
         classArray = [];
@@ -142,23 +144,8 @@ function limaker(itemvalue){
         localStorage.setItem('classes', JSON.stringify(classArray));
         }
 
-    li.appendChild(label);
+    //li.appendChild(label);
     ul.appendChild(li);
-}
-
-function limaker2(itemvalue,classvalue){
-    let li = document.createElement('li');//li
-    
-    let checkbox = document.createElement('input');
-        checkbox.type = "checkbox";
-        checkbox.setAttribute("class", "itemcheck");
-
-    
-    li.appendChild(checkbox);
-
-    let label= document.createElement('label');
-    label.appendChild(document.createTextNode(itemvalue));
-    li.setAttribute("class", classvalue);
-    li.appendChild(label);
-    ul.appendChild(li);
+    //console.log(li.innerText);
+   return li.innerText;
 }
